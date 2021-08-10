@@ -1,11 +1,11 @@
-﻿using ApiWebCarros.Models;
+﻿using Api.Web.Carros.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiWebCarros.Data
+namespace Api.Web.Carros.Data
 {
     public class ApplicationDbContext : DbContext 
     {

@@ -9,12 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ApiWebCarros.Models;
+using Api.Web.Carros.Models;
 using Microsoft.Extensions.Logging;
-using ApiWebCarros.Data;
+using Api.Web.Carros.Data;
 using Microsoft.EntityFrameworkCore;
+using Api.Web.Carros.Tools;
 
-namespace ApiWebCarros
+namespace Api.Web.Carros
 {
     public class Startup
     {
@@ -35,7 +36,7 @@ namespace ApiWebCarros
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -52,6 +53,14 @@ namespace ApiWebCarros
             {
                 endpoints.MapControllers();
             });
+
+            CreateMock(serviceProvider);
+        }
+        private void CreateMock(IServiceProvider serviceProvider)
+        {
+            var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+            MockCarros mockCarros = new MockCarros(context);
+            mockCarros.AddCarrosIniciais();
         }
     }
 }
